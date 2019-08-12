@@ -7,6 +7,11 @@ import (
 
 type ErrNegativeSqrt float64
 
+/* call to fmt.Sprint(e) inside the Error method will send the program into an infinite loop: 
+if the Error() method calls fmt.Sprint(e), 
+fmt.Sprint(e) will call e.Error() to convert the value of e to a string,
+then the program will recurse until out of memory
+*/
 func (e ErrNegativeSqrt) Error() string {
 	return fmt.Sprintf("cannot Sqrt negative number: %v", float64(e))
 }
